@@ -7,8 +7,8 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.0"
 }
 
-group = "in.technowolf"
-version = "1.0.4"
+group = "endeavor.nabi"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
