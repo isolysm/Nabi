@@ -1,65 +1,62 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    val kotlinVersion = "1.6.0"
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.serialization") version kotlinVersion
-
-    val detektVersion = "1.18.0"
-    id("io.gitlab.arturbosch.detekt") version detektVersion
+    kotlin("jvm") version "1.6.10"
+    kotlin("plugin.serialization") version "1.6.10"
     application
 }
 
+group = "endeavor.nabi"
+version = "1.0.0"
+
 repositories {
     mavenCentral()
+    jcenter() /* BlueUtils & kordx.emoji */
+    maven("https://jitpack.io")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
+    //Kord
+    implementation("dev.kord:kord-core:0.8.0-M5")
+    implementation("com.gitlab.kordlib:kordx.emoji:0.4.0")
 
-    val kordVersion = "0.8.0-M8"
-    val slf4jVersion = "1.7.32"
-    val ktorVersion = "1.6.7"
+    //Config
+    implementation("io.github.config4k:config4k:0.4.2")
+    implementation("com.google.code.gson:gson:2.8.6")
 
-    val junitVersion = "5.8.2"
+    //Logging
+    implementation("org.slf4j:slf4j-simple:1.7.30")
 
-    implementation("dev.kord", "kord-core", kordVersion)
-    implementation("org.slf4j", "slf4j-api", slf4jVersion)
-    implementation("org.slf4j", "slf4j-jdk17", slf4jVersion)
+    //Utils
+    implementation("org.apache.commons:commons-lang3:3.11")
+    implementation("net.axay:BlueUtils:1.0.2")
 
-    implementation("io.ktor", "ktor-server-core", ktorVersion)
-    implementation("io.ktor", "ktor-server-cio", ktorVersion)
-    implementation("io.ktor", "ktor-serialization", ktorVersion)
+    // Kotlin
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation("io.ktor:ktor-client-core:1.6.1")
+    implementation("io.ktor:ktor-client-cio:1.6.1")
+    implementation("io.ktor:ktor-client-serialization:1.6.1")
+    implementation("io.ktor:ktor-client-gson:1.6.1")
+    implementation(kotlin("stdlib"))
+    implementation(kotlin("reflect"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVersion)
-    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVersion)
-}
+    // MongoDB
+    implementation("org.litote.kmongo", "kmongo-core", "4.2.3")
+    implementation("org.litote.kmongo", "kmongo-serialization-mapping", "4.2.3")
 
-detekt {
-    buildUponDefaultConfig = true
-
-    reports {
-        html.enabled = true
-        xml.enabled = true
-        txt.enabled = true
-        sarif.enabled = true
-    }
+    //PerspectiveAPI
+    implementation("com.github.origma:Google-PerspectiveAPI-Java-Client:0.0.5")
 }
 
 application {
-    // Define the main class for the application.
-    mainClass.set("de.gianttree.discord.w2g.WatchTogetherKt")
+    mainClass.set("me.obsilabor.noriskclientbot.ManagerKt")
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>{
+        kotlinOptions.jvmTarget = "17"
+    }
 }
 
-tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "17"
-}
-
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>() {
-    jvmTarget = "1.17"
-}
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
