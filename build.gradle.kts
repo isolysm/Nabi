@@ -9,7 +9,7 @@ plugins {
     id("com.github.johnrengelman.shadow")
 }
 
-group = "net.irisshaders.lilybot"
+group = "endeavor.nabi"
 version = "2.0"
 
 repositories {
@@ -69,7 +69,7 @@ tasks.withType<KotlinCompile> {
 tasks.jar {
     manifest {
         attributes(
-            "Main-Class" to "net.irisshaders.lilybot.LilyBotKt"
+            "Main-Class" to "endeavor.nabi.nabibot.NabiBotKt"
         )
     }
 }

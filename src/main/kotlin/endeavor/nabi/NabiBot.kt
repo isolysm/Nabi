@@ -14,12 +14,4 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.Exception
 
-val configPath: Path = Paths.get(CONFIG_PATH)
-
-private val gitHubLogger = KotlinLogging.logger {}
-
-suspend fun main() {
-    val bot = ExtensibleBot(BOT_TOKEN) {
-        application
-    }
-}
+val 
