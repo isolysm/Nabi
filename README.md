@@ -1,5 +1,5 @@
 # Nabi 나비
-Moderation written directly in Kotlin.
+Moderation written directly in Kotlin using Kord and DiscordInteraKTions.
 
 나비 means butterfly in Korean.
 

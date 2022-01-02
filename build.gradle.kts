@@ -1,57 +1,85 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
-    id("org.jmailen.kotlinter") version "3.8.0"
-    id("com.github.johnrengelman.shadow") version "7.1.0"
+    application
+
+    kotlin("jvm")
+    kotlin("plugin.serialization")
+
+    id("com.github.johnrengelman.shadow")
 }
 
-group = "endeavor.nabi"
-version = "1.0.0"
+group = "net.irisshaders.lilybot"
+version = "2.0"
 
 repositories {
     mavenCentral()
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
+
     maven {
-        name = "nabi"
+        name = "Kotlin Discord"
         url = uri("https://maven.kotlindiscord.com/repository/maven-public/")
     }
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
-    implementation("com.kotlindiscord.kord.extensions:kord-extensions:1.5.1-RC1")
-    implementation("com.kotlindiscord.kord.extensions:time4j:1.5.1-RC1")
-    implementation("io.ktor:ktor-client-core:1.6.7")
-    implementation("org.slf4j:slf4j-simple:1.7.32")
-    implementation("net.dean.jraw:JRAW:1.1.0")
-    implementation("org.jetbrains.exposed:exposed-core:0.36.1")
-    implementation("org.jetbrains.exposed:exposed-dao:0.36.1")
-    implementation("org.jetbrains.exposed:exposed-jdbc:0.36.1")
-    implementation("org.xerial:sqlite-jdbc:3.36.0.2")
-    implementation ("io.getunleash:unleash-client-java:5.0.3")
-    implementation("dev.kord.x:emoji:0.5.0")
+
+    implementation(libs.kord.extensions)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kord.phishing)
+
+    // Logging dependencies
+    implementation(libs.groovy)
+    implementation(libs.logback)
+    implementation(libs.logging)
+
+    // Tags
+    implementation(libs.kotlinx.serialization)
+    implementation(libs.kaml)
+    implementation(libs.jgit)
+
+    // TOML reader
+    implementation("com.github.jezza:toml:1.2")
+
+    // Github API
+    implementation("org.kohsuke:github-api:1.301")
+
+    // Exposed
+    implementation("org.jetbrains.exposed:exposed-core:0.36.2")
+    implementation("org.jetbrains.exposed:exposed-dao:0.36.2")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.36.2")
+
+    // Hikari
+    implementation("com.zaxxer:HikariCP:5.0.0")
+
+    // SQLite
+    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+}
+
+application {
+    // This is deprecated, but the Shadow plugin requires it
+    mainClassName = "endeavor.nabi.NabiKt"
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17"
+
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
 }
 
-tasks.withType<Jar> {
+tasks.jar {
     manifest {
-        attributes["Main-Class"] = "MainKt"
+        attributes(
+            "Main-Class" to "net.irisshaders.lilybot.LilyBotKt"
+        )
     }
 }
 
-tasks.check {
-    dependsOn("installKotlinterPrePushHook")
+// This is to fix an issue with pushing that I cannot seem to fix.
+tasks.create<Delete>("detekt") {
+
 }
 
-kotlinter {
-    ignoreFailures = false
-    indentSize = 4
-    reporters = arrayOf("checkstyle", "plain")
-    experimentalRules = false
-    disabledRules = arrayOf("no-wildcard-imports", "import-ordering", "indent")
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
