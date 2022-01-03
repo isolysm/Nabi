@@ -29,13 +29,13 @@ dependencies {
 
     // Logging dependencies
     implementation(libs.groovy)
+    implementation(libs.jansi)
     implementation(libs.logback)
     implementation(libs.logging)
 
     // Tags
     implementation(libs.kotlinx.serialization)
     implementation(libs.kaml)
-    implementation(libs.jgit)
 
     // TOML reader
     implementation("com.github.jezza:toml:1.2")
