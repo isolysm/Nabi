@@ -1,7 +1,7 @@
 package endeavor.nabi.commands.general
 
 import com.kotlindiscord.kord.extensions.DISCORD_GREEN
-import com.kotlindiscord.kord.extensions.DISCORD_BLURPLE
+import com.kotlindiscord.kord.extensions.DISCORD_YELLOW
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommands
 import com.kotlindiscord.kord.extensions.types.respond
@@ -28,7 +28,7 @@ class Ping : Extension() {
 
                 respond {
                     embed {
-                        color = "DISCORD_BLURPLE"
+                        color = "DISCORD_YELLOW"
                         title = "A request has been sent back"
 
                         timestamp = Clock.System.now()
