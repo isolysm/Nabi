@@ -32,6 +32,7 @@ suspend fun main() {
         extensions {
             add {::Ping}
             add {::Ban}
+            add {::PurgeMessages}
 
             extPhishing {
                 appName = "Nabi"
