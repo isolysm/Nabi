@@ -1,4 +1,4 @@
 # Nabi 나비
-Yeah idk what to put here anymore stfu azoo bloo
+Nabi has been deprecated in this organization. This organization is going to be for modifications or whatever Vispin and I feel like doing. 
 
-Also chat commands are not being considered so no
+Please go (here)[https://github.com/myosyn/Nabi/tree/main] instead for the source code.
